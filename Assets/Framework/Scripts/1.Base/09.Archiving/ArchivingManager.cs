@@ -54,11 +54,16 @@ namespace Framework
             base.Init();
             archivingPath = Application.persistentDataPath + "/" + "SaveData";
             settingPath = Application.persistentDataPath + "/" + "Setting";
-            archivingMetaData = new ArchivingMetaData();
 
             if(!Directory.Exists(archivingPath))
             {
                 Directory.CreateDirectory(archivingPath);
+            }
+            archivingMetaData = LoadFile<ArchivingMetaData>(archivingPath + "/ArchivingMetaData");
+            if(archivingMetaData == null)
+            {
+                archivingMetaData = new ArchivingMetaData();
+                SaveArchivingMetaData();
             }
             saveCache = new Dictionary<int, Dictionary<string, object>>();
         }
@@ -99,7 +104,13 @@ namespace Framework
                 else return 0;
             }
         }
-
+        /// <summary>
+        /// 根据特定条件排序
+        /// </summary>
+        /// <typeparam name="T">根据排序的类型</typeparam>
+        /// <param name="condition">条件函数</param>
+        /// <param name="isDescending">是否倒序</param>
+        /// <returns></returns>
         public List<ArchivingItem> GetArchivingListByCondition<T>(Func<ArchivingItem,T> condition,bool isDescending = false)
         {
             if(!isDescending)
@@ -146,13 +157,17 @@ namespace Framework
         /// <param name="archivingItem">存档对象</param>
         public void DeleteArchivingItem(ArchivingItem archivingItem)
         {
+            //删除实际存档
             string path = GetOneArchivingPath(archivingItem.archivingId,false);
             if (path != null)
             {
                 Directory.Delete(path, true);
             }
+            //删除存档缓存
             RemoveCache(archivingItem.archivingId);
+            //删除存档元数据并保存
             archivingMetaData.archivingItems.Remove(archivingItem);
+            SaveArchivingMetaData();
         }
         /// <summary>
         /// 获取存档对象
