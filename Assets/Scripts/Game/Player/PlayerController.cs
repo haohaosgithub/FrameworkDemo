@@ -98,7 +98,6 @@ public class PlayerController : SingletonMono<PlayerController>
             case E_PlayerState.GetHit:
                 break;
             case E_PlayerState.Die:
-                
                 break;
         }
     }
