@@ -532,7 +532,7 @@ GameObject:
   - component: {fileID: 1569183177}
   - component: {fileID: 1569183176}
   m_Layer: 5
-  m_Name: Mask (1)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 1776358494}
   - component: {fileID: 1776358493}
   m_Layer: 5
-  m_Name: Mask (2)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -750,10 +750,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -790,7 +790,7 @@ GameObject:
   - component: {fileID: 1787274343}
   - component: {fileID: 1787274342}
   m_Layer: 5
-  m_Name: Mask (4)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1086,7 +1086,7 @@ GameObject:
   - component: {fileID: 2095768562}
   - component: {fileID: 2095768561}
   m_Layer: 5
-  m_Name: Mask (3)
+  m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1281,7 +1281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicAudioSource: {fileID: 1808733647}
   effectAudioSourceList: []
-  effectAudioSourcePrefab: {fileID: 8437691732478982017, guid: a5dba9da9bd11284c9b7ac6758382ba8, type: 3}
+  effectAudioSourcePrefab: {fileID: 6373852490848044839, guid: 9f89f05b3cce8864aa128e6946c92552, type: 3}
   globalVolume: 1
   musicVolume: 0.5
   effectAudioVolume: 0.5
