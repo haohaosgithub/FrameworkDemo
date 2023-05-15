@@ -1,6 +1,7 @@
 using Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 /// <summary>
 /// 怪物生成器
@@ -33,16 +34,19 @@ public class MonsterManager : SingletonMono<MonsterManager>
     //根据概率随机得到要生成的怪物配置
     public MonsterConfig GetOneConfig() 
     {
-        //float sum = 0;
-        ////归一化概率
-        //foreach(var v in lvConfig.monsterConfigDic.Values)
-        //{
-        //    sum += v;
-        //}
-        //foreach (var k in lvConfig.monsterConfigDic.Keys)
-        //{
-        //    lvConfig.monsterConfigDic[k] /= sum; 
-        //}
+        float sum = 0;
+        //归一化概率
+        foreach (var v in lvConfig.monsterConfigDic.Values)
+        {
+            sum += v;
+        }
+        
+        for(int i = 0;i< lvConfig.monsterConfigDic.Count;i++)
+        {
+            KeyValuePair<MonsterConfig, float> kvp = lvConfig.monsterConfigDic.ElementAt(i);
+            float v = kvp.Value / sum;
+            lvConfig.monsterConfigDic[kvp.Key] = v;
+        }
         //加权随机选数
         float rand = Random.Range(0f, 1f);
         float sumProb = 0f;

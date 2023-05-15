@@ -67,5 +67,5 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  maxMonsterNum: 1
-  generateMonsterInternal: 5
+  maxMonsterNum: 2
+  generateMonsterInternal: 20
