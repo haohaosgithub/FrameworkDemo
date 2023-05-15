@@ -47,6 +47,7 @@ public class SettingPanel : PanelBase
     private void OnClickokbutton()
     {
         AudioManager.Instance.PlayOneShot("Audio/Button", GameRoot.Instance);
+        //TODO:保存音量的数值到Setting中
         this.Close();
     }
 
@@ -64,5 +65,6 @@ public class SettingPanel : PanelBase
     {
         musicVolume = AudioManager.Instance.MusicVolume;
         musicEffectVolume = AudioManager.Instance.EffectAudioVolume;
+        
     }
 }

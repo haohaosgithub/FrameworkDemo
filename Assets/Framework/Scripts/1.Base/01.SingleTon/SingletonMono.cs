@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Framework
 {
-    public class SingletonMono<T> : MonoBehaviour where T : SingletonMono<T>
+    public abstract class SingletonMono<T> : MonoBehaviour where T : SingletonMono<T>
     {
         protected static T instance;
         
