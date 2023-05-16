@@ -7,7 +7,7 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     Rigidbody rb;
-
+    int attack;
     /// <summary>
     /// 子弹初始化
     /// </summary>
@@ -21,6 +21,7 @@ public class BulletController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //rb.velocity = Vector3.zero;
         rb.AddForce(moveDir * moveForce);
+        attack = atk;
         
         Invoke(nameof(Destory), 10); //发射10s后自动销毁
     }
@@ -36,9 +37,10 @@ public class BulletController : MonoBehaviour
         Destory();
 
 
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Monster"))
         {
-
+            MonsterController mc = other.GetComponent<MonsterController>();
+            mc.GetHit(attack);
         }
     }
     public void Destory()

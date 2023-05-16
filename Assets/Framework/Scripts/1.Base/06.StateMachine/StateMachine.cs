@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Framework
 {
@@ -26,6 +27,11 @@ namespace Framework
         /// <param name="isHandleChangeCur">当切换的目标状态和当前状态相同时是否处理</param>
         public void ChangeState<T>(bool isHandleChangeCur = false) where T : StateBase,new() 
         {
+            //if(curStateObj != null)
+            //{
+            //    UnityEngine.Debug.Log("abc  " + curStateObj + "  " + curStateObj.GetType());
+            //}
+            
             //切换的目标状态和当前状态相同且不处理
             if (curStateObj != null && CurStateType == typeof(T) && !isHandleChangeCur) return;
             //退出当前状态
@@ -42,7 +48,7 @@ namespace Framework
             curStateObj.Enter();
             MonoManager.Instance.AddUpdateListener(curStateObj.Update);
             MonoManager.Instance.AddLateUpdateListener(curStateObj.LateUpdate);
-            MonoManager.Instance.AddFixedUpdateListener(curStateObj.FixedUpdate);
+            MonoManager.Instance.AddFixedUpdateListener(curStateObj.FixedUpdate);           
         }
 
         private StateBase GetState<T>() where T : StateBase ,new()

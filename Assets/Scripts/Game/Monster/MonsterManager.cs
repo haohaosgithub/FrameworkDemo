@@ -14,7 +14,7 @@ public class MonsterManager : LogicManager<MonsterManager>
     public int curMonsterNum; //当前场景怪物数量
 
 
-    public HashSet<MonsterController> allMonster = new HashSet<MonsterController>();
+    //public HashSet<MonsterController> allMonster = new HashSet<MonsterController>();
 
     public List<Transform> patrolPoint; //巡逻点
     protected override void Awake()
@@ -35,7 +35,7 @@ public class MonsterManager : LogicManager<MonsterManager>
             MonsterController monsterController = ResManager.Instance.Load<MonsterController>("Game/Monster/Monster",transform);
             monsterController.transform.position = monsterGenPoint.position;
             monsterController.Init(monsterConfig);
-            allMonster.Add(monsterController);
+            //allMonster.Add(monsterController);
         }
     }
     //根据概率随机得到要生成的怪物配置
