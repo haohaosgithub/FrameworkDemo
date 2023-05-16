@@ -20,12 +20,12 @@ public class MonsterPatrolState : MonsterStateBase
     public override void Update() 
     {
         base.Update();
-        //if(IsFindPlayer()) 
-        //{
-        //    machine.ChangeState<MonsterFollowState>();
-        //    return;
-        //}
-        if(Vector3.Distance(monsterController.transform.position, nowTarget) < 1)
+        if (IsFindPlayer())
+        {
+            machine.ChangeState<MonsterFollowState>();
+            return;
+        }
+        if (Vector3.Distance(monsterController.transform.position, nowTarget) < monsterController.stopPatrolRange)
         {
             machine.ChangeState<MonsterIdleState>();
         }

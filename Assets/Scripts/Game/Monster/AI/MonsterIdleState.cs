@@ -5,19 +5,43 @@ using UnityEngine;
 
 public class MonsterIdleState : MonsterStateBase
 {
+    Coroutine patrolCoroutine;
     public override void Enter()
     {
         base.Enter();
         monsterController.navAgent.enabled = false;
         PlayAnim("Idle");
-        
-        MonoManager.Instance.StartCoroutine(Patrol());
+
+        patrolCoroutine = MonoManager.Instance.StartCoroutine(Patrol());
     }
 
+    public override void Update()
+    {
+        base.Update();
+        if(IsFindPlayer())
+        {
+            if (patrolCoroutine != null)
+            {
+                MonoManager.Instance.StopCoroutine(patrolCoroutine);
+            }
+            machine.ChangeState<MonsterFollowState>();
+            return;
+        }
+    }
+    public override void Exit()
+    {
+        base.Exit();
+        if (patrolCoroutine != null)
+        {
+            MonoManager.Instance.StopCoroutine(patrolCoroutine);
+        }
+    }
     public IEnumerator Patrol()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(monsterController.waitNextPatrolTime);
        
         machine.ChangeState<MonsterPatrolState>();
     }
+
+    
 }

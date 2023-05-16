@@ -2,17 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterAttackState : MonoBehaviour
+public class MonsterAttackState : MonsterStateBase
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void Enter()
     {
-        
+        base.Enter();
+        monsterController.navAgent.enabled = false;
+        PlayAnim("Attack");
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
+        if(!CanAtkPlayer())
+        {
+            if(IsFindPlayer())
+            {
+                machine.ChangeState<MonsterFollowState>();
+                return;
+            }
+
+        }
+
     }
+
 }

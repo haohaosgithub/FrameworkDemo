@@ -13,7 +13,8 @@ public class MonsterManager : LogicManager<MonsterManager>
     public Transform monsterGenPoint; //怪物生成点
     public int curMonsterNum; //当前场景怪物数量
 
-    public List<MonsterController> allMonster;
+
+    public HashSet<MonsterController> allMonster = new HashSet<MonsterController>();
 
     public List<Transform> patrolPoint; //巡逻点
     protected override void Awake()

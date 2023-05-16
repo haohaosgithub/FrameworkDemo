@@ -24,7 +24,7 @@ public class MonsterStateBase : StateBase
     /// <returns></returns>
     public bool IsFindPlayer()
     {
-        if(Vector3.Distance(monsterController.transform.position,monsterController.playerController.transform.position ) < 4)
+        if(Vector3.Distance(monsterController.transform.position,monsterController.playerController.transform.position ) < monsterController.sightRange)
         {
             return true;
         }
@@ -33,7 +33,7 @@ public class MonsterStateBase : StateBase
 
     public bool CanAtkPlayer()
     {
-        if (Vector3.Distance(monsterController.transform.position, monsterController.playerController.transform.position) < 1.5f)
+        if (Vector3.Distance(monsterController.transform.position, monsterController.playerController.transform.position) < monsterController.atkRange)
         {
             return true;
         }

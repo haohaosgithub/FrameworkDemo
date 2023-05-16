@@ -8,7 +8,6 @@ public class MonsterFollowState : MonsterStateBase
     {
         base.Enter();
         monsterController.navAgent.enabled = true;
-        //monsterController.navAgent.SetDestination(monsterController.playerController.transform.position);
         PlayAnim("Follow");
     }
     public override void Update()
@@ -16,8 +15,16 @@ public class MonsterFollowState : MonsterStateBase
         base.Update();
         if(CanAtkPlayer())
         {
-
+            machine.ChangeState<MonsterAttackState>();
+            return;
         }
-        monsterController.navAgent.SetDestination(monsterController.playerController.transform.position);
+        if(IsFindPlayer())
+        {
+            monsterController.navAgent.SetDestination(monsterController.playerController.transform.position);
+        }
+        else
+        {
+            machine.ChangeState<MonsterPatrolState>();
+        }
     }
 }
