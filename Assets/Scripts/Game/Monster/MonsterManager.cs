@@ -24,6 +24,15 @@ public class MonsterManager : LogicManager<MonsterManager>
         
         InvokeRepeating(nameof(GenerateMonster),1,lvConfig.generateMonsterInternal);
     }
+    protected override void RegisterListener()
+    {
+        EventManager.Instance.Register("MonsterDie", OnMonsterDie);
+    }
+
+    protected override void UnRegisterListener()
+    {
+        EventManager.Instance.Unregister("MonsterDie", OnMonsterDie);
+    }
     public void GenerateMonster()
     {
         if(curMonsterNum < lvConfig.maxMonsterNum)
@@ -75,13 +84,10 @@ public class MonsterManager : LogicManager<MonsterManager>
         return patrolPoint[Random.Range(0, patrolPoint.Count)].position;
     }
 
-    protected override void RegisterListener()
-    {
-        
-    }
+    
 
-    protected override void UnRegisterListener()
+    public void OnMonsterDie()
     {
-        
+        --curMonsterNum;
     }
 }

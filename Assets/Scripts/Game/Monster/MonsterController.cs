@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[Pool]
 public class MonsterController : MonoBehaviour ,IStateMachineOwner
 {
     private StateMachine stateMachine;
@@ -50,14 +51,25 @@ public class MonsterController : MonoBehaviour ,IStateMachineOwner
         curHP -= dmg;
         if (curHP <= 0)
         {
+            curHP = 0;
+
             stateMachine.ChangeState<MonsterDieState>();
         }
         else
         {
+ 
             stateMachine.ChangeState<MonsterGetHitState>();
         }
     }
-
+    /// <summary>
+    /// 死亡逻辑
+    /// </summary>
+    public void Die()
+    {
+        stateMachine.Stop();
+        monsterView.Destroy();
+        PoolManager.Instance.PushGameObj(gameObject);
+    }
     public void EndGetHit()
     {
         stateMachine.ChangeState<MonsterFollowState>();
