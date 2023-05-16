@@ -6,16 +6,21 @@ using UnityEngine;
 /// <summary>
 /// 怪物生成器
 /// </summary>
-public class MonsterManager : SingletonMono<MonsterManager>
+public class MonsterManager : LogicManager<MonsterManager>
 {
     public LVConfig lvConfig; //当前关卡的配置
 
     public Transform monsterGenPoint; //怪物生成点
     public int curMonsterNum; //当前场景怪物数量
 
+    public List<MonsterController> allMonster;
+
+    public List<Transform> patrolPoint; //巡逻点
     protected override void Awake()
     {
+        base.Awake();
         monsterGenPoint = transform.Find("monsterGenPoint");
+        
         InvokeRepeating(nameof(GenerateMonster),1,lvConfig.generateMonsterInternal);
     }
     public void GenerateMonster()
@@ -29,6 +34,7 @@ public class MonsterManager : SingletonMono<MonsterManager>
             MonsterController monsterController = ResManager.Instance.Load<MonsterController>("Game/Monster/Monster",transform);
             monsterController.transform.position = monsterGenPoint.position;
             monsterController.Init(monsterConfig);
+            allMonster.Add(monsterController);
         }
     }
     //根据概率随机得到要生成的怪物配置
@@ -61,5 +67,20 @@ public class MonsterManager : SingletonMono<MonsterManager>
             lastConfig = kv.Key;
         }
         return lastConfig;
+    }
+
+    public Vector3 GetPatrolPoint()
+    {
+        return patrolPoint[Random.Range(0, patrolPoint.Count)].position;
+    }
+
+    protected override void RegisterListener()
+    {
+        
+    }
+
+    protected override void UnRegisterListener()
+    {
+        
     }
 }

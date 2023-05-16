@@ -21,7 +21,7 @@ public class BulletController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //rb.velocity = Vector3.zero;
         rb.AddForce(moveDir * moveForce);
-        print(rb.velocity);
+        
         Invoke(nameof(Destory), 10); //发射10s后自动销毁
     }
 
