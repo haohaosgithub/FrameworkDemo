@@ -29,7 +29,7 @@ namespace Framework
         {
             //if(curStateObj != null)
             //{
-            //    UnityEngine.Debug.Log("abc  " + curStateObj + "  " + curStateObj.GetType());
+            //    UnityEngine.Debug.Log("abc  " + curStateObj + "  "+ typeof(T)  );
             //}
             
             //切换的目标状态和当前状态相同且不处理

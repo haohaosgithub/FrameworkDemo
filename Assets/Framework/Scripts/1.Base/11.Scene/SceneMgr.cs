@@ -9,7 +9,7 @@ namespace Framework
     /// <summary>
     /// Framework的场景管理器，由于Unity有SceneManager，为了避免重名带来的各种问题，将框架中的场景管理器命名为SceneMgr
     /// </summary>
-    public class SceneMgr : MonoBehaviour
+    public class SceneMgr : ManagerBase<SceneMgr>
     {
         public void Load(string sceneName)
         {

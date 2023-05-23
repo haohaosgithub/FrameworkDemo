@@ -21,5 +21,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  maxHP: 0
-  attack: 0
+  moveSpeed: 4
+  maxBulletNum: 60
+  shootInternal: 0.4
+  bulletMoveForce: 1000
+  bulletAtk: 10
+  maxHP: 100

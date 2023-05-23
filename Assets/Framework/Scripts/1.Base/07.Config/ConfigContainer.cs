@@ -7,7 +7,7 @@ namespace Framework
 {
     //配置容器类，所有游戏内配置（如装备，NPC，玩家配置等）
     [CreateAssetMenu(fileName = "ConfigContainer", menuName = "Config/ConfigContainer")]
-    public class ConfigContainer : SerializedScriptableObject
+    public class ConfigContainer : ConfigBase
     {
         public Dictionary<string, Dictionary<int, ConfigBase>> configDic;
         public T GetConfig<T>(string typeName, int id) where T : ConfigBase

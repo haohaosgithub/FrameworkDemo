@@ -40,6 +40,7 @@ public class BulletController : MonoBehaviour
         if (other.CompareTag("Monster"))
         {
             MonsterController mc = other.GetComponent<MonsterController>();
+            //print("hit monster");
             mc.GetHit(attack);
         }
     }

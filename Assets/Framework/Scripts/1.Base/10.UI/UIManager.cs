@@ -107,7 +107,7 @@ namespace Framework
         {
             foreach(var panel in panelDic)
             {
-                panel.Value.panelBase.Close();
+                panel.Value.panelBase?.Close();
             }
         }
 

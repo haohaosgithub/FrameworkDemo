@@ -16,6 +16,7 @@ public class MonsterStateBase : StateBase
     public void PlayAnim(string animationName)
     {
         monsterController.monsterView.anim.CrossFadeInFixedTime(animationName,0.2f);
+        //monsterController.monsterView.anim.CrossFade(animationName,0.2f);
     }
 
     /// <summary>

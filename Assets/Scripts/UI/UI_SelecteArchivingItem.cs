@@ -41,7 +41,8 @@ public class UI_SelecteArchivingItem : MonoBehaviour
 
     private void OnClickstartButton()
     {
-        
+        //print("start");
+        EventManager.Instance.EventTrigger<ArchivingItem>("EnterGame", nowItem);
     }
 
     public void Destroy()

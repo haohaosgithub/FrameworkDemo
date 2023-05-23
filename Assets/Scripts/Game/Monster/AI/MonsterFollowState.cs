@@ -15,7 +15,7 @@ public class MonsterFollowState : MonsterStateBase
         base.Update();
         if(CanAtkPlayer())
         {
-            machine.ChangeState<MonsterAttackState>();
+            machine.ChangeState<MonsterAttackState>(); 
             return;
         }
         if(IsFindPlayer())

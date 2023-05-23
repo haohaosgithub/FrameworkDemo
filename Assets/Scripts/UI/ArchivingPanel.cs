@@ -14,15 +14,17 @@ public class ArchivingPanel : PanelBase
     private bool isNeedUpdateArchivingList = true; //是否需要更新存档列表
     private ArchivingItem selItem = null;
     private Button closeButton;
+    
     public override void Init()
     {
         base.Init();
         uiArchivingItemList = new List<UI_ArchivingItem>();
         #region 获取面板上的相关组件
-
-        #endregion
         content = transform.Find("scrollView/viewport/content");
         closeButton = transform.Find("closeButton").GetComponent<Button>();
+        
+        #endregion
+
         #region 注册面板上的UI事件
         closeButton.onClick.AddListener(OnClickCloseButton);
         #endregion

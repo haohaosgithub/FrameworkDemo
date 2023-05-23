@@ -23,4 +23,8 @@ MonoBehaviour:
     SerializationNodes: []
   hp: 20
   atk: 10
-  prefab: {fileID: 8597698371886135454, guid: 43d74129fa80974489081d1b3a203924, type: 3}
+  prefabStr: Game/Monster/MonsterModelA
+  stopPatrolRange: 1
+  waitNextPatrolTime: 1
+  sightRange: 4
+  atkRange: 1.5

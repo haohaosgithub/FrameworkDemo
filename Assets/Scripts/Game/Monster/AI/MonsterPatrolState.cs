@@ -7,7 +7,6 @@ public class MonsterPatrolState : MonsterStateBase
     Vector3 nowTarget;
     public override void Enter()
     {
-        
         base.Enter();
         
         nowTarget = monsterController.GetPatrolPoint();

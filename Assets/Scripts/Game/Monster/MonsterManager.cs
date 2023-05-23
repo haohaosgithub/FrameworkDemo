@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class MonsterManager : LogicManager<MonsterManager>
 {
-    public LVConfig lvConfig; //当前关卡的配置
+    private LVConfig lvConfig; //当前关卡的配置
 
     public Transform monsterGenPoint; //怪物生成点
     public int curMonsterNum; //当前场景怪物数量
@@ -21,7 +21,7 @@ public class MonsterManager : LogicManager<MonsterManager>
     {
         base.Awake();
         monsterGenPoint = transform.Find("monsterGenPoint");
-        
+        lvConfig = ConfigManager.Instance.GetConfig<LVConfig>("LV");
         InvokeRepeating(nameof(GenerateMonster),1,lvConfig.generateMonsterInternal);
     }
     protected override void RegisterListener()

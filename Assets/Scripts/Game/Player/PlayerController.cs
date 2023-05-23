@@ -2,6 +2,7 @@ using Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Playables;
 
 
@@ -13,7 +14,6 @@ public enum E_PlayerState
     Die
 }
 
-//[DefaultExecutionOrder(200)]
 public class PlayerController : SingletonMono<PlayerController>
 {
     
@@ -26,6 +26,7 @@ public class PlayerController : SingletonMono<PlayerController>
         }
         set
         {
+
             playerState = value;
             switch (playerState)
             {
@@ -35,13 +36,22 @@ public class PlayerController : SingletonMono<PlayerController>
                     StartCoroutine(DoReload());
                     break;
                 case E_PlayerState.GetHit:
+                    //重置受伤
+                    StopCoroutine(DoGetHit());
+                    animator.SetBool("GetHit", false);
+                    animator.SetBool("GetHit", true);
+                    StartCoroutine(DoGetHit());
                     break;
                 case E_PlayerState.Die:
+                    animator.SetBool("Die", true);
+                    EventManager.Instance.EventTrigger("GameOver");
                     break;
                         
             }
         }
     }
+
+    
 
     private CharacterController characterController;
     private Animator animator;
@@ -51,10 +61,38 @@ public class PlayerController : SingletonMono<PlayerController>
     #region 参数
     public float moveSpeed;
     public int bulletNum;
+    public int BulletNum
+    {
+        get { return bulletNum; }
+        set
+        {
+            if(bulletNum != value)
+            {
+                bulletNum = value;
+                EventManager.Instance.EventTrigger<int,int>("BulletNumUpdate",bulletNum,maxBulletNum);
+            }
+        }
+    }
     public int maxBulletNum;
     public float shootInternal;
     public int bulletMoveForce;
     public int bulletAtk;
+    private int maxHP;
+    [SerializeField]
+    private int hp;
+    public int HP { get => hp; 
+        set 
+        {
+            if(hp != value)
+            {
+                hp = value;
+                EventManager.Instance.EventTrigger("PlayerHPUpdate",hp, maxHP);
+            }
+            
+
+        }  
+    }
+
     #endregion
 
     protected override  void Awake()
@@ -67,15 +105,28 @@ public class PlayerController : SingletonMono<PlayerController>
         firePoint = transform.Find("firePoint").transform;
     }
 
+    public void Init(PlayerConfig config)
+    {
+        moveSpeed = config.moveSpeed;
+        maxBulletNum = config.maxBulletNum;
+        BulletNum = maxBulletNum;
+        shootInternal = config.shootInternal;
+        bulletMoveForce = config.bulletMoveForce;
+        bulletAtk = config.bulletAtk;
+        maxHP = config.maxHP;
+        HP = maxHP;
+    }
     private void Start()
     {
+        
         //设置数值，后续会从配置中读取，这里只是测试
-        moveSpeed = 4;
-        maxBulletNum = 60;
-        bulletNum = maxBulletNum;
-        shootInternal = 0.2f;
-        bulletMoveForce = 1000;
-        bulletAtk = 10;
+        //moveSpeed = 4;
+        //maxBulletNum = 60;
+        //bulletNum = maxBulletNum;
+        //shootInternal = 0.4f;
+        //bulletMoveForce = 1000;
+        //bulletAtk = 10;
+        //HP = 50;
     }
     private void Update()
     {
@@ -85,6 +136,7 @@ public class PlayerController : SingletonMono<PlayerController>
     //不同状态的update
     private void StateOnUpdate()
     {
+        
         switch (playerState)
         {
             case E_PlayerState.Normal:  //正常状态下可以移动，射击，装弹
@@ -146,12 +198,12 @@ public class PlayerController : SingletonMono<PlayerController>
     
     private void Reload()
     {
-        if (bulletNum < maxBulletNum && Input.GetKeyDown(KeyCode.R))
+        if (BulletNum < maxBulletNum && Input.GetKeyDown(KeyCode.R))
             PlayerState = E_PlayerState.Reload;
     }
     private IEnumerator DoShoot()
     {
-        bulletNum -= 1;
+        BulletNum -= 1;
         animator.SetTrigger("Shoot");
         AudioManager.Instance.PlayOneShot("Audio/Shoot/laser_01", transform);
         canShoot = false;
@@ -162,7 +214,7 @@ public class PlayerController : SingletonMono<PlayerController>
         yield return new WaitForSeconds(shootInternal);
         canShoot = true;
 
-        if(bulletNum <= 0) //没子弹了则自动装弹
+        if(BulletNum <= 0) //没子弹了则自动装弹
         {
             PlayerState = E_PlayerState.Reload;
         }
@@ -175,8 +227,30 @@ public class PlayerController : SingletonMono<PlayerController>
         AudioManager.Instance.PlayOneShot("Audio/Shoot/Reload",transform);
         yield return new WaitForSeconds(1.9f);
         animator.SetBool("Reload", false);
-        bulletNum = maxBulletNum;
+        BulletNum = maxBulletNum;
         PlayerState = E_PlayerState.Normal;
     }
 
+    public void GetHit(int damage)
+    {
+        if (HP == 0) return;
+        HP -= damage;
+        //print(HP);
+        if(hp > 0)
+        {
+            PlayerState = E_PlayerState.GetHit;
+        }
+        else
+        {
+            HP = 0;
+            PlayerState = E_PlayerState.Die;
+        }
+        
+    }
+    private IEnumerator DoGetHit()
+    {
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool("GetHit",false);
+        PlayerState = E_PlayerState.Normal;
+    }
 }

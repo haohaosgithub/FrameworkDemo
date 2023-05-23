@@ -12,7 +12,8 @@ namespace Framework
     {
         public ConfigContainer configContainer;
 
-        public T GetConfig<T>(string typeName, int id) where T : ConfigBase
+        
+        public T GetConfig<T>(string typeName, int id = 0) where T : ConfigBase
         {
             return configContainer.GetConfig<T>(typeName, id);
         }
